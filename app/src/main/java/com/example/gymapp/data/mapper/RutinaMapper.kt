@@ -10,10 +10,14 @@ import com.example.gymapp.domain.model.Rutina
 fun RutinaDto.toDomain(): Rutina = Rutina(
     id = id ?: 0,
     nombre = nombre,
-    grupoMuscular = GrupoMuscular.entries.first { it.etiqueta == grupoMuscular },
+    grupoMuscular = GrupoMuscular.entries.firstOrNull {
+        it.etiqueta.equals(grupoMuscular, ignoreCase = true) || it.name.equals(grupoMuscular, ignoreCase = true)
+    } ?: GrupoMuscular.PECHO,
     series = series,
     repeticiones = repeticiones,
-    nivel = Nivel.entries.first { it.etiqueta == nivel },
+    nivel = Nivel.entries.firstOrNull {
+        it.etiqueta.equals(nivel, ignoreCase = true) || it.name.equals(nivel, ignoreCase = true)
+    } ?: Nivel.PRINCIPIANTE,
     activa = activa
 )
 
